@@ -1,0 +1,67 @@
+<div class="row">
+  <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
+    <!-- We need to set the directive formGroup and bind it to our declared reactive form -->
+    <form [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
+      <div formGroupName="userData">
+        <div class="form-group">
+          <label for="username">Username</label>
+          <!-- formControlName must be placed in every form control for angular to detect it -->
+          <input
+            type="text"
+            id="username"
+            formControlName="username"
+            class="form-control">
+        </div>
+        <button class="btn btn-primary" type="button" (click)="onRandomName()">Add random username</button>
+        <span
+          *ngIf="!signUpForm.get('userData.username').valid
+          && signUpForm.get('userData.username').touched">
+          <!-- It is a good idea to use an ngSwitch in an structure like this -->
+          <span *ngIf="signUpForm.get('userData.username').errors['nameIsForbidden']"
+                class="help-block">Spanish bad words are not allowed for the username!</span>
+          <span *ngIf="signUpForm.get('userData.username').errors['required']"
+                class="help-block">Please enter a username!</span>
+        </span>
+        <div class="form-group">
+          <label for="email">email</label>
+          <input
+            type="text"
+            id="email"
+            formControlName="email"
+            class="form-control">
+        </div>
+        <span *ngIf="!signUpForm.get('userData.email').valid && signUpForm.get('userData.email').touched">
+          <span *ngIf="signUpForm.get('userData.email').errors['emailIsForbidden']"
+                class="help-block">This email is already registered!</span>
+          <span *ngIf="signUpForm.get('userData.email').errors['required']"
+                class="help-block">Email can't be empty!</span>
+          <span *ngIf="signUpForm.get('userData.email').errors['email']"
+                class="help-block">Please enter a valid email!</span>
+        </span>
+      </div>
+      <div class="radio" *ngFor="let gender of genders">
+        <label>
+          <input
+            type="radio"
+            formControlName="gender"
+            [value]="gender">{{ gender }}
+        </label>
+      </div>
+      <div formArrayName="hobbies">
+        <h4>Your hobbies</h4>
+        <button class="btn btn-default" type="button" (click)="onAddHobby()">Add hobby</button>
+        <div
+          class="input-group"
+          *ngFor="let hobbyControl of signUpForm.get('hobbies').controls; let i = index">
+          <input type="text" class="form-control" [formControlName]="i" placeholder="Write your hobbie">
+          <span type="button" class="input-group-btn">
+            <button class="btn btn-danger" type="button" (click)="deleteHobbie(i)">X</button>
+          </span>
+        </div>
+      </div>
+      <div *ngIf="!signUpForm.valid && signUpForm.touched" class="alert alert-danger" role="alert">Please fill up the form.</div>
+      <button class="btn btn-default" type="button" (click)="onRandomValues()">Add random values</button>
+      <button class="btn btn-primary" type="submit" [disabled]="!signUpForm.valid">Submit</button>
+    </form>
+  </div>
+</div>

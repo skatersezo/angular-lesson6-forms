@@ -1,0 +1,25 @@
+<h3>Template driven forms</h3>
+<p>In the template driven approach, everything you do, you do it on the view.</p>
+<p>ngModel is not only for two-way data binging, it is a directive from forms module which adds control functionality in the forms.</p>
+<p>Validation with TD approach is made by directives. You can find out their names, by searching for "validator"
+  in the official docs: <a>https://angular.io/api?type=directive</a> -
+  everything marked with "D" is a directive and can be added to your template.
+  Additionally, you might also want to enable HTML5 validation (by default, Angular disables it).
+  You can do so by adding the ngNativeValidate  to a control in your template.</p>
+<p>ngModel can be used as a simple form control with no binding, one way binding for giving a default value, and two way
+binding to instantly put the value.</p>
+<hr>
+<h3>Reactive forms</h3>
+<p>In the reactive approach, you synchronize the form in the view, but you configure it in the logic.</p>
+<p>With the reactive approach you define a FormGroup object in the *.ts file that will hold inside all the FormControls.</p>
+<p>Instatiating the FormGroup object allows you to pass a Json object with the properties named as the formControlName directive
+  string you provided in the template.</p>
+<p>Each FormControl that you instantiate in the FormGroup accepts 2 arguments, the default value and the validator or array of
+validators. The validations are done by the Validators object provided by Angular.</p>
+<p>Within the reactive approach you're allowed to create nested FormGroups.</p>
+<p>Besides FormControls it is posible also to instantiate a FormArray inside the FormGroup that will contain as many
+FormControls as we want. It is useful to provide dinamically FormControls to an existing FormGroup.</p>
+<p>Validators are functions, and Angular provides a lot out of the box, but it is also possible to create custom validators
+by writting a function that will receive a FormControl and will return a key-value pair object.</p>
+<p>If you need a Validation from a server, it is possible to create Async validators. But it is important to remember, this async
+validators are provided as a third argument to the FormControls.</p>
